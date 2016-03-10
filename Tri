@@ -1,0 +1,20 @@
+from random import random
+L = [8,1,2,4,7,3]
+print(L)
+
+def minimum(liste):
+    mini = 0
+    for l in range(len(liste)):
+        if((liste[l]<liste[mini])):
+            mini = l
+            
+    return(mini)
+    
+def tri(liste):
+
+    for k in range(len(liste)):
+       a = minimum(liste[k:])+k
+       print(liste, liste[k], liste[minimum(liste[k:])+k])
+       liste[k], liste[a] = liste[a], liste[k] 
+       
+    return(liste)
