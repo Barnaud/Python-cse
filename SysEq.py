@@ -1,4 +1,4 @@
-l= [[1,2,8],[0,3,1],[0,0,2]]
+l= [[2,2,8],[1,3,1],[3,0,2]]
 m= [3,2,1]
 
 def resoudre(l,m):
@@ -11,3 +11,19 @@ def resoudre(l,m):
         s[-k-1]= (1/l[-k-1][-k-1])*(m[-k-1]-reste)
         
     return(s)
+
+def bonPivot(liste):
+    for k in range(len(liste)):
+        if liste[k][0] == 1:
+                liste[k], liste[0] = liste[0], liste[k]
+                return (liste)
+def produitListe(liste, nb):
+    return([liste[k]*nb for k in range(len(liste))])
+def difference(l1,l2):
+    return([l1[k]-l2[k] for k in range(len(l1))])
+
+def triangle(liste,m):
+    for i in range(1,len(liste)):
+        for k in range(i,len(liste)):
+            liste[k]=difference(liste[k],produitListe(liste[i-1],liste[k][i-1]/liste[i-1][i-1]))
+            print(liste)
