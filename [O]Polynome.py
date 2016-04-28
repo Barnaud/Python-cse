@@ -154,3 +154,5 @@ class polynome:
     def integre(self):
         return(polynome([0]+[self[k-1]/(k) for k in range(1, len(self)+1)]))
             
+    def aire(self, a, b):
+        return(self.integre().img(b)-self.integre().img(a))
