@@ -147,3 +147,10 @@ class polynome:
             a+=self[k-1]
         
         return(a)
+    
+    def derive(self):
+        return(polynome([(k+1)*self[k+1] for k in range(len(self)-1)]))
+        
+    def integre(self):
+        return(polynome([0]+[self[k-1]/(k) for k in range(1, len(self)+1)]))
+            
