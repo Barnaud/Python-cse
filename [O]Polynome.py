@@ -1,29 +1,143 @@
-class Polynome:
-    
-    def __init__(self,a=0,b=0,c=0):
-        self.A=a
-        self.B=b
-        self.C=c
-    def __repr__(self):
-        return ('{}x^2+{}x+{}'.format(self.A,self.B,self.C))
+def poly(a,n):
+    b = [0 for k in range(n+1)]
+    b[n] = a
+    return(polynome(b))
+class polynome:
+    def __init__(self, lst = 0):
         
-    def solve(self):
-        if self.A!= 0:
-            delta = (self.B**2)-(4*self.A*self.C)
-            return (((-1*self.B-delta**0.5)/2*self.A),(-1*self.B+delta**0.5)/2*self.A)
+        if(type(lst) == list):
+            if (lst == [0 for k in range(len(lst))]):
+                self.liste = [0]
+                return(None)
+            a = len(lst)-1
+            
+            while(lst[a]==0):
+                a-=1
+            self.liste = [lst[k] for k in range(a+1)]
+        elif (type(lst) == int or type(lst) == float):
+            self.liste = [lst]
+    def __repr__(self):
+        msg = ""
+        if(len(self.liste) == 1):
+            return(str(self.liste[0]))
+        for k in range(1, len(self.liste)-1):
+            
+            if(self.liste[-k] !=0):
+                if (k!=1):
+                    msg+="+"
+                if(self.liste [-k]!=1):
+                    msg+=str(self.liste[-k])
+                msg+="x**"
+                msg+=str(len(self.liste)-k)
+        if(self.liste[1] !=0 ):
+            if(len(self) != 2):
+                msg+="+"
+            if(self.liste[1] !=1):
+                msg+=str(self.liste[1])
+            msg +="x"
+        if(self.liste[0] !=0):
+            msg+="+"
+            msg+=str(self.liste[0])
+        return(msg)
+        
+    def __len__(self):
+        return(len(self.liste))
+        
+    def getListe(self):
+        return(self.liste)
+        
+    def __getitem__(self,i = None):
+        if(i == None):
+            return(self.liste)
         else:
-            return (-self.C/self.B)
-    def __add__(self,P2):
-         if type(P2) == int:
-             return (Polynome(self.A,self.B,self.C + P2))
-         if type(P2) == __main__.Polynome:
-            return (Polynome(self.A+P2.A,self.B+P2.B,self.C + P2.C))
-         else:
-            return (False)
-    def __getitem__(self,i):
-        if type(i) == int:
+            if (i>len(self)-1):
+                return(0)
+            return(self.liste[i])
+    
+    def __setitem__(self, i,valeur):
+        if(i<len(self)-1):
+            self.liste [i] = valeur
             
-            return (self.A*i**2+self.B*i+self.C)
-        if type(i) == list:
-            return([self.A*nb**2+self.B*nb+self.C for nb in i])
+        else:
+            D = poly(valeur, i)
             
+            E = self + D
+            self.liste = E.liste
+            
+           
+    
+    
+    def __add__(self, objet):
+        if (type(objet) == int or type(objet) == float):
+            return(self+polynome([objet]))
+        elif(type(objet == polynome)):
+            
+            return(polynome([self[k]+objet[k] for k in range(max(len(objet), len(self)))]))
+    def __sub__(self, objet):
+        return(self+objet*(-1))
+        
+    def __mul__(self, objet):
+        if (type(objet) == int or type(objet) == float):
+            return(polynome([self.liste[k]*objet for k in range(len(self))]))
+        else:
+            C = []
+            n = max(len(self), len(objet))
+            for k in range(2*n):
+                C.append(0)
+                for i in range(k+1):
+                    C[k] +=self[i]*objet[k-i]
+                
+            return(polynome(C))
+    def __truediv__(self, objet):
+        return(self*(1/objet))
+    
+    def __eq__(self, objet):
+        if(type(objet) == polynome):
+            return(self.liste == objet[None])
+        else:
+            return(self.liste[0] == objet and len(self) == 1)
+    def __ne__(self, objet):
+        if(type(objet) == polynome):
+            return(self.liste != objet[None])
+        else:
+            return(self.liste[0] != objet or len(self) != 1)
+    def __iadd__(self, objet):
+        self = self+objet
+        return(self)
+    def __isub__(self, objet):
+        self = self-objet
+        return(self)
+    def __imul__(self, objet):
+        self = self*objet
+        return(self)
+    def __pow__(self, nb):
+        a = self
+        for k in range(nb-1):
+            self*=a
+        return(self)
+    def __floordiv__(self, objet):
+        q = polynome()
+        r = self
+        while(len(objet)<=len(r)):
+            
+            q+=poly(r[-1]/objet[-1], len(r)-len(objet))
+            
+            r-=(poly(r[-1]/objet[-1], len(r)-len(objet))*objet)
+            
+            
+            
+        return(q)
+        
+    def __mod__(self, objet):
+        q = polynome()
+        r = self
+        while(len(objet)<=len(r)):
+            
+            q+=poly(r[-1]/objet[-1], len(r)-len(objet))
+            
+            r-=(poly(r[-1]/objet[-1], len(r)-len(objet))*objet)
+            
+            
+            
+        return(r)
+        
