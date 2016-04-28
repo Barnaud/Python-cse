@@ -140,4 +140,10 @@ class polynome:
             
             
         return(r)
+    def img(self,x):
+        a = self[-1]
+        for k in range(len(self)-1, 0,-1):
+            a*=x
+            a+=self[k-1]
         
+        return(a)
