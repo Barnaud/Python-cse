@@ -1,0 +1,12 @@
+from random import *
+def equipes(joueurs):
+    rouges = []
+    for k in range(int(len(joueurs)/2)):
+        a=joueurs[randint(0,len(joueurs)-1)]
+        rouges.append(a)
+        joueurs.remove(a)
+    print("Equipe rouge:")
+    print(rouges)
+    print("\nEquipe bleue:")
+    print(joueurs)
+          
